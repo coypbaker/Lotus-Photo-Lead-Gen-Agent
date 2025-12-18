@@ -34,18 +34,18 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f0f0f] py-12 px-4 sm:px-6 lg:px-8 pt-28">
+    <div className="min-h-screen flex items-center justify-center bg-[#0c0a15] py-12 px-4 sm:px-6 lg:px-8 pt-28">
       <div className="max-w-md w-full">
         <div className="text-center mb-10">
-          <div className="mx-auto h-14 w-14 rounded-2xl bg-gradient-to-br from-[#d4af37] to-[#b8962e] flex items-center justify-center shadow-lg shadow-[#d4af37]/20">
-            <span className="text-[#0f0f0f] font-bold text-xl">P</span>
+          <div className="mx-auto h-14 w-14 rounded-2xl bg-gradient-to-br from-[#14b8a6] via-[#a855f7] to-[#f43f5e] flex items-center justify-center shadow-lg shadow-[#a855f7]/20">
+            <span className="text-white font-bold text-xl">P</span>
           </div>
-          <h2 className="mt-8 text-3xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+          <h2 className="mt-8 text-3xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
             Welcome Back
           </h2>
-          <p className="mt-3 text-[#a0a0a0]">
+          <p className="mt-3 text-[#a9a4b8]">
             Or{' '}
-            <Link href="/signup" className="font-medium text-[#d4af37] hover:text-[#e5c45e] transition-colors">
+            <Link href="/signup" className="font-medium text-[#14b8a6] hover:text-[#2dd4bf] transition-colors">
               create a new account
             </Link>
           </p>
@@ -60,7 +60,7 @@ export default function LoginPage() {
           
           <div className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Email address
               </label>
               <input
@@ -71,13 +71,13 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] placeholder-[#666] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
                 placeholder="you@example.com"
               />
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Password
               </label>
               <input
@@ -88,7 +88,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] placeholder-[#666] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
                 placeholder="••••••••"
               />
             </div>
@@ -97,7 +97,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-8 w-full btn-gold py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-8 w-full btn-primary py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>

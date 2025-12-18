@@ -128,18 +128,18 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center pt-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#333] border-t-[#d4af37]"></div>
+      <div className="min-h-screen bg-[#0c0a15] flex items-center justify-center pt-20">
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#2d2640] border-t-[#14b8a6]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f0f] pt-24">
+    <div className="min-h-screen bg-[#0c0a15] pt-24">
       <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Lead Generation Settings</h1>
-          <p className="mt-3 text-[#a0a0a0]">
+          <h1 className="text-3xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Lead Generation Settings</h1>
+          <p className="mt-3 text-[#a9a4b8]">
             Configure how our AI agents find and qualify leads for your photography business.
           </p>
         </div>
@@ -157,7 +157,7 @@ export default function SettingsPage() {
 
           <div className="space-y-8">
             <div>
-              <label htmlFor="photographer_niche" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="photographer_niche" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Photographer Niche
               </label>
               <input
@@ -166,15 +166,15 @@ export default function SettingsPage() {
                 value={settings.photographer_niche}
                 onChange={(e) => setSettings({ ...settings, photographer_niche: e.target.value })}
                 placeholder="e.g., wedding photographer, portrait photographer"
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] placeholder-[#666] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
               />
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-[#6b6480]">
                 Describe your photography specialty to help us find relevant leads.
               </p>
             </div>
 
             <div>
-              <label htmlFor="target_locations" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="target_locations" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Target Locations
               </label>
               <input
@@ -183,15 +183,15 @@ export default function SettingsPage() {
                 value={settings.target_locations}
                 onChange={(e) => setSettings({ ...settings, target_locations: e.target.value })}
                 placeholder="e.g., California, New York, Texas"
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] placeholder-[#666] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
               />
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-[#6b6480]">
                 Comma-separated list of cities, states, or regions where you want to find clients.
               </p>
             </div>
 
             <div>
-              <label htmlFor="ideal_client_description" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="ideal_client_description" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Ideal Client Description
               </label>
               <textarea
@@ -200,15 +200,15 @@ export default function SettingsPage() {
                 onChange={(e) => setSettings({ ...settings, ideal_client_description: e.target.value })}
                 placeholder="e.g., engaged couples planning luxury weddings with budgets over $5,000 for photography"
                 rows={4}
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] placeholder-[#666] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
               />
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-[#6b6480]">
                 Describe your ideal client in detail. Include budget range, event type, style preferences, etc.
               </p>
             </div>
 
             <div>
-              <label htmlFor="daily_lead_target" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="daily_lead_target" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Daily Lead Target
               </label>
               <input
@@ -218,33 +218,33 @@ export default function SettingsPage() {
                 onChange={(e) => setSettings({ ...settings, daily_lead_target: parseInt(e.target.value) || 10 })}
                 min={1}
                 max={100}
-                className="w-32 px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-32 px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
               />
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-[#6b6480]">
                 How many leads per day should we aim to find? (1-100)
               </p>
             </div>
 
             <div>
-              <label htmlFor="outreach_channel" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="outreach_channel" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Preferred Outreach Channel
               </label>
               <select
                 id="outreach_channel"
                 value={settings.outreach_channel}
                 onChange={(e) => setSettings({ ...settings, outreach_channel: e.target.value as 'Email' | 'LinkedIn message' })}
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
               >
                 <option value="Email">Email</option>
                 <option value="LinkedIn message">LinkedIn message</option>
               </select>
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-[#6b6480]">
                 How would you prefer to reach out to leads?
               </p>
             </div>
 
             <div>
-              <label htmlFor="email_signature" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+              <label htmlFor="email_signature" className="block text-sm font-medium text-[#f0eef5] mb-2">
                 Email Signature
               </label>
               <textarea
@@ -253,24 +253,24 @@ export default function SettingsPage() {
                 onChange={(e) => setSettings({ ...settings, email_signature: e.target.value })}
                 placeholder="e.g.,&#10;Best regards,&#10;John Smith&#10;Smith Photography&#10;www.smithphoto.com&#10;(555) 123-4567"
                 rows={5}
-                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-xl text-[#f5f5f5] placeholder-[#666] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                className="w-full px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
               />
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-[#6b6480]">
                 Your email signature that will be included in outreach messages.
               </p>
             </div>
 
             {/* Autonomous Mode Section */}
-            <div className="pt-8 border-t border-[#333]">
-              <h3 className="text-xl font-semibold text-[#f5f5f5] mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>🤖 Autonomous Mode</h3>
+            <div className="pt-8 border-t border-[#2d2640]">
+              <h3 className="text-xl font-semibold text-[#f0eef5] mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>🤖 Autonomous Mode</h3>
               
-              <div className="bg-gradient-to-r from-[#d4af37]/10 to-[#1a1a1a] rounded-2xl p-6 border border-[#d4af37]/30">
+              <div className="bg-gradient-to-r from-[#a855f7]/10 to-[#14101f] rounded-2xl p-6 border border-[#a855f7]/30">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <label htmlFor="autonomous_mode" className="text-sm font-medium text-[#f5f5f5]">
+                    <label htmlFor="autonomous_mode" className="text-sm font-medium text-[#f0eef5]">
                       Enable Daily Autonomous Lead Generation
                     </label>
-                    <p className="mt-2 text-sm text-[#a0a0a0]">
+                    <p className="mt-2 text-sm text-[#a9a4b8]">
                       When enabled, our AI will automatically find new leads and send outreach emails daily. You&apos;ll receive a summary email each day.
                     </p>
                   </div>
@@ -278,8 +278,8 @@ export default function SettingsPage() {
                     <button
                       type="button"
                       onClick={() => setSettings({ ...settings, autonomous_mode: !settings.autonomous_mode })}
-                      className={`relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:ring-offset-2 focus:ring-offset-[#1a1a1a] ${
-                        settings.autonomous_mode ? 'bg-[#d4af37]' : 'bg-[#333]'
+                      className={`relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#a855f7] focus:ring-offset-2 focus:ring-offset-[#14101f] ${
+                        settings.autonomous_mode ? 'bg-[#a855f7]' : 'bg-[#2d2640]'
                       }`}
                     >
                       <span
@@ -292,8 +292,8 @@ export default function SettingsPage() {
                 </div>
 
                 {settings.autonomous_mode && (
-                  <div className="mt-6 pt-6 border-t border-[#d4af37]/20">
-                    <label htmlFor="daily_outreach_limit" className="block text-sm font-medium text-[#f5f5f5] mb-2">
+                  <div className="mt-6 pt-6 border-t border-[#a855f7]/20">
+                    <label htmlFor="daily_outreach_limit" className="block text-sm font-medium text-[#f0eef5] mb-2">
                       Daily Outreach Limit
                     </label>
                     <input
@@ -303,9 +303,9 @@ export default function SettingsPage() {
                       onChange={(e) => setSettings({ ...settings, daily_outreach_limit: parseInt(e.target.value) || 5 })}
                       min={1}
                       max={20}
-                      className="w-32 px-4 py-3 bg-[#0f0f0f] border border-[#333] rounded-xl text-[#f5f5f5] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/20"
+                      className="w-32 px-4 py-3 bg-[#0c0a15] border border-[#2d2640] rounded-xl text-[#f0eef5] focus:border-[#a855f7] focus:ring-1 focus:ring-[#a855f7]/20"
                     />
-                    <p className="mt-2 text-sm text-[#666]">
+                    <p className="mt-2 text-sm text-[#6b6480]">
                       Maximum outreach emails to send per day (1-20). Respects your plan limits.
                     </p>
                   </div>
@@ -318,7 +318,7 @@ export default function SettingsPage() {
             <button
               type="submit"
               disabled={saving}
-              className="btn-gold px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'Saving...' : 'Save Settings'}
             </button>

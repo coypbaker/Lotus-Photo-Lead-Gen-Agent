@@ -107,8 +107,8 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center pt-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#333] border-t-[#d4af37]"></div>
+      <div className="min-h-screen bg-[#0c0a15] flex items-center justify-center pt-20">
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#2d2640] border-t-[#14b8a6]"></div>
       </div>
     )
   }
@@ -120,12 +120,12 @@ export default function BillingPage() {
   const isUnlimited = leadsLimit === -1
 
   return (
-    <div className="min-h-screen bg-[#0f0f0f] pt-24">
+    <div className="min-h-screen bg-[#0c0a15] pt-24">
       <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Billing & Subscription</h1>
-          <p className="mt-3 text-[#a0a0a0]">
+          <h1 className="text-3xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Billing & Subscription</h1>
+          <p className="mt-3 text-[#a9a4b8]">
             Manage your subscription and view your usage.
           </p>
         </div>
@@ -134,34 +134,34 @@ export default function BillingPage() {
         <div className="card p-8 mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <p className="text-sm text-[#666]">Current Plan</p>
-              <h2 className="text-2xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>{currentPlanDetails.name}</h2>
+              <p className="text-sm text-[#6b6480]">Current Plan</p>
+              <h2 className="text-2xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>{currentPlanDetails.name}</h2>
               {subscription?.subscription_status && subscription.subscription_status !== 'active' && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#d4af37]/20 text-[#d4af37] mt-2">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#a855f7]/20 text-[#a855f7] mt-2">
                   {subscription.subscription_status}
                 </span>
               )}
             </div>
             <div className="text-left sm:text-right">
-              <p className="text-4xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+              <p className="text-4xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                 ${currentPlanDetails.price}
-                <span className="text-lg font-normal text-[#666]">/month</span>
+                <span className="text-lg font-normal text-[#6b6480]">/month</span>
               </p>
             </div>
           </div>
 
           {/* Usage */}
-          <div className="mt-8 pt-8 border-t border-[#333]">
+          <div className="mt-8 pt-8 border-t border-[#2d2640]">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-medium text-[#a0a0a0]">Leads Used This Month</p>
-              <p className="text-sm text-[#f5f5f5]">
+              <p className="text-sm font-medium text-[#a9a4b8]">Leads Used This Month</p>
+              <p className="text-sm text-[#f0eef5]">
                 {leadsUsed} / {isUnlimited ? '∞' : leadsLimit}
               </p>
             </div>
             {!isUnlimited && (
-              <div className="w-full bg-[#333] rounded-full h-2">
+              <div className="w-full bg-[#2d2640] rounded-full h-2">
                 <div 
-                  className="bg-gradient-to-r from-[#d4af37] to-[#e5c45e] h-2 rounded-full transition-all"
+                  className="bg-gradient-to-r from-[#14b8a6] via-[#a855f7] to-[#f43f5e] h-2 rounded-full transition-all"
                   style={{ width: `${Math.min((leadsUsed / leadsLimit) * 100, 100)}%` }}
                 />
               </div>
@@ -173,7 +173,7 @@ export default function BillingPage() {
             <div className="mt-6">
               <button
                 onClick={handleManageSubscription}
-                className="text-[#d4af37] hover:text-[#e5c45e] text-sm font-medium transition-colors"
+                className="text-[#14b8a6] hover:text-[#2dd4bf] text-sm font-medium transition-colors"
               >
                 Manage subscription →
               </button>
@@ -182,7 +182,7 @@ export default function BillingPage() {
         </div>
 
         {/* Plans Grid */}
-        <h3 className="text-xl font-bold text-[#f5f5f5] mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+        <h3 className="text-xl font-bold text-[#f0eef5] mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
           {currentPlan === 'free' ? 'Upgrade Your Plan' : 'Available Plans'}
         </h3>
         
@@ -196,38 +196,38 @@ export default function BillingPage() {
                 key={key}
                 className={`rounded-2xl p-8 transition-all duration-300 ${
                   isPro
-                    ? 'bg-gradient-to-b from-[#d4af37]/20 to-[#1a1a1a] border border-[#d4af37]/50 shadow-xl shadow-[#d4af37]/10'
+                    ? 'bg-gradient-to-b from-[#a855f7]/20 via-[#1a1528] to-[#14101f] border border-[#a855f7]/50 shadow-xl shadow-[#a855f7]/10'
                     : 'card'
-                } ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}`}
+                } ${isCurrentPlan ? 'ring-2 ring-[#14b8a6]/50' : ''}`}
               >
                 {isCurrentPlan && (
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium mb-4 ${
-                    isPro ? 'bg-[#d4af37]/20 text-[#d4af37]' : 'bg-green-900/30 text-green-400'
+                    isPro ? 'bg-[#a855f7]/20 text-[#a855f7]' : 'bg-[#14b8a6]/20 text-[#14b8a6]'
                   }`}>
                     Current Plan
                   </span>
                 )}
                 {isPro && !isCurrentPlan && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#d4af37] to-[#e5c45e] text-[#0f0f0f] mb-4">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#14b8a6] via-[#a855f7] to-[#f43f5e] text-white mb-4">
                     POPULAR
                   </span>
                 )}
                 
-                <h4 className={`text-lg font-semibold ${isPro ? 'text-[#d4af37]' : 'text-[#a0a0a0]'}`}>
+                <h4 className={`text-lg font-semibold ${isPro ? 'text-[#a855f7]' : 'text-[#a9a4b8]'}`}>
                   {plan.name}
                 </h4>
                 
                 <div className="mt-3">
-                  <span className="text-4xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                  <span className="text-4xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                     ${plan.price}
                   </span>
-                  <span className="text-[#666] ml-1">/month</span>
+                  <span className="text-[#6b6480] ml-1">/month</span>
                 </div>
                 
                 <ul className="mt-6 space-y-3">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className={`flex items-center text-sm ${isPro ? 'text-[#f5f5f5]' : 'text-[#a0a0a0]'}`}>
-                      <svg className="h-5 w-5 mr-3 text-[#d4af37] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <li key={i} className={`flex items-center text-sm ${isPro ? 'text-[#f0eef5]' : 'text-[#a9a4b8]'}`}>
+                      <svg className={`h-5 w-5 mr-3 flex-shrink-0 ${i % 3 === 0 ? 'text-[#14b8a6]' : i % 3 === 1 ? 'text-[#a855f7]' : 'text-[#f43f5e]'}`} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       {feature}
@@ -240,12 +240,12 @@ export default function BillingPage() {
                   disabled={isCurrentPlan || upgrading === key}
                   className={`mt-8 w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all ${
                     isCurrentPlan
-                      ? 'bg-[#252525] text-[#666] cursor-default'
+                      ? 'bg-[#1e1830] text-[#6b6480] cursor-default'
                       : key === 'free'
-                        ? 'bg-[#252525] text-[#666] cursor-default'
+                        ? 'bg-[#1e1830] text-[#6b6480] cursor-default'
                         : isPro
-                          ? 'btn-gold'
-                          : 'bg-[#252525] text-[#f5f5f5] border border-[#333] hover:border-[#d4af37]/50'
+                          ? 'btn-accent'
+                          : 'bg-[#1e1830] text-[#f0eef5] border border-[#2d2640] hover:border-[#14b8a6]/50'
                   } disabled:opacity-50`}
                 >
                   {upgrading === key
