@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "PhotoLeadAgent - Premium AI Lead Generation for Photographers",
+  title: "Lotus Photo Leads - Premium AI Lead Generation for Photographers",
   description: "Autonomous AI lead generation for wedding & portrait photographers. Get qualified leads on autopilot.",
 };
 

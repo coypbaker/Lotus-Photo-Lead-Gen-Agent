@@ -163,7 +163,7 @@ export function generateDailySummaryEmail(params: {
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
   <div style="text-align: center; margin-bottom: 24px;">
     <div style="display: inline-block; background: linear-gradient(135deg, #7c3aed, #3b82f6); padding: 12px 24px; border-radius: 12px;">
-      <span style="color: white; font-size: 24px; font-weight: bold;">PhotoLeadAgent</span>
+      <span style="color: white; font-size: 24px; font-weight: bold;">Lotus Photo Leads</span>
     </div>
   </div>
 
@@ -210,7 +210,7 @@ export function generateDailySummaryEmail(params: {
   <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
 
   <p style="font-size: 12px; color: #9ca3af; text-align: center;">
-    You're receiving this because you enabled autonomous mode in PhotoLeadAgent.<br/>
+    You're receiving this because you enabled autonomous mode in Lotus Photo Leads.<br/>
     <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard/settings" style="color: #7c3aed;">Manage your preferences</a>
   </p>
 </div>
@@ -230,7 +230,7 @@ Check your dashboard to see the new leads and track responses:
 ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard
 
 ---
-You're receiving this because you enabled autonomous mode in PhotoLeadAgent.
+You're receiving this because you enabled autonomous mode in Lotus Photo Leads.
 Manage your preferences: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard/settings
   `.trim()
 

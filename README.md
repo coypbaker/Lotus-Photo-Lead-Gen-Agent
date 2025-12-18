@@ -1,6 +1,6 @@
-# PhotoLeadAgent
+# Lotus Photo Leads
 
-🤖 Autonomous AI lead generation for wedding & portrait photographers.
+🪷 Autonomous AI lead generation for wedding & portrait photographers.
 
 ## Features
 

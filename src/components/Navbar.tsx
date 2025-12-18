@@ -40,10 +40,10 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#14b8a6] via-[#a855f7] to-[#f43f5e] flex items-center justify-center shadow-lg shadow-[#a855f7]/20 group-hover:shadow-[#a855f7]/40 transition-all duration-300">
-                <span className="text-white font-bold text-lg">P</span>
+                <span className="text-white font-bold text-lg">L</span>
               </div>
               <span className="text-xl font-semibold text-[#f0eef5] tracking-tight" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                PhotoLead<span className="text-gradient-primary">Agent</span>
+                Lotus <span className="text-gradient-primary">Photo Leads</span>
               </span>
             </Link>
           </div>

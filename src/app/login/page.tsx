@@ -38,7 +38,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-10">
           <div className="mx-auto h-14 w-14 rounded-2xl bg-gradient-to-br from-[#14b8a6] via-[#a855f7] to-[#f43f5e] flex items-center justify-center shadow-lg shadow-[#a855f7]/20">
-            <span className="text-white font-bold text-xl">P</span>
+            <span className="text-white font-bold text-xl">L</span>
           </div>
           <h2 className="mt-8 text-3xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
             Welcome Back

@@ -56,7 +56,7 @@ export default function Home() {
               The Process
             </p>
             <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-              How PhotoLeadAgent Works
+              How Lotus Photo Leads Works
             </h2>
             <p className="mt-6 text-lg text-[#a9a4b8] max-w-2xl mx-auto">
               Our AI works 24/7 to find your ideal clients so you can focus on your craft.
@@ -277,14 +277,14 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-3 mb-6 md:mb-0">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#14b8a6] via-[#a855f7] to-[#f43f5e] flex items-center justify-center">
-                <span className="text-white font-bold">P</span>
+                <span className="text-white font-bold">L</span>
               </div>
               <span className="text-[#f0eef5] font-semibold text-lg" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                PhotoLead<span className="text-gradient-primary">Agent</span>
+                Lotus <span className="text-gradient-primary">Photo Leads</span>
               </span>
             </div>
             <p className="text-sm text-[#6b6480]">
-              &copy; 2024 PhotoLeadAgent. All rights reserved.
+              &copy; 2024 Lotus Photo Leads. All rights reserved.
             </p>
           </div>
         </div>

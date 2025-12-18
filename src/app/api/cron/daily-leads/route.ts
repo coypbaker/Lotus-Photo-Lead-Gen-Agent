@@ -188,7 +188,7 @@ export async function GET(request: Request) {
                 to: recipientEmail,
                 from: {
                   email: process.env.SENDGRID_FROM_EMAIL || userEmail,
-                  name: userSettings.email_signature?.split('\n')[0] || 'PhotoLeadAgent',
+                  name: userSettings.email_signature?.split('\n')[0] || 'Lotus Photo Leads',
                 },
                 subject: emailContent.subject,
                 text: emailContent.text,
@@ -234,8 +234,8 @@ export async function GET(request: Request) {
             await sgMail.send({
               to: userEmail,
               from: {
-                email: process.env.SENDGRID_FROM_EMAIL || 'noreply@photoleadagent.com',
-                name: 'PhotoLeadAgent',
+                email: process.env.SENDGRID_FROM_EMAIL || 'noreply@lotusphotoleads.com',
+                name: 'Lotus Photo Leads',
               },
               subject: summaryEmail.subject,
               text: summaryEmail.text,

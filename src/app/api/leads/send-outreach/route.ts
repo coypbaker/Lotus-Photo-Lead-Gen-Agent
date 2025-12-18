@@ -83,7 +83,7 @@ export async function POST(request: Request) {
       to: recipientEmail!,
       from: {
         email: process.env.SENDGRID_FROM_EMAIL || user.email!,
-        name: settings?.email_signature?.split('\n')[0] || 'PhotoLeadAgent',
+        name: settings?.email_signature?.split('\n')[0] || 'Lotus Photo Leads',
       },
       subject: emailContent.subject,
       text: emailContent.text,
