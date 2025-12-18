@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 
 interface Lead {
@@ -222,114 +223,145 @@ export default function LeadsPanel() {
     </span>
   )
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  }
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
+    hover: { scale: 1.02, y: -4 }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#2d2640] border-t-[#14b8a6]"></div>
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="rounded-full h-12 w-12 border-2 border-[#2d2640] border-t-[#14b8a6]"
+        />
       </div>
     )
   }
 
   return (
-    <div>
-      {/* Analytics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-gradient-to-br from-[#1a1528] to-[#14101f] rounded-2xl p-5 border border-[#2d2640] hover:border-[#14b8a6]/40 transition-colors">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-3xl font-bold text-[#f0eef5]">{stats.total}</div>
-              <div className="text-sm text-[#6b6480] mt-1">Total Leads</div>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      {/* Analytics Cards with Gold Accents */}
+      <motion.div variants={itemVariants} className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        {[
+          { value: stats.total, label: 'Total Leads', color: '#14b8a6', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z' },
+          { value: stats.contacted, label: 'Contacted', color: '#a855f7', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+          { value: stats.replied, label: 'Replied', color: '#f59e0b', icon: 'M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6' },
+          { value: stats.converted, label: 'Converted', color: '#f43f5e', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+        ].map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            variants={cardVariants}
+            whileHover="hover"
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="glass rounded-2xl p-6 cursor-default group"
+            style={{ borderColor: `${stat.color}20` }}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <motion.div 
+                  className="text-4xl font-bold text-[#f0eef5]"
+                  style={{ fontFamily: 'var(--font-playfair), serif' }}
+                  initial={{ scale: 0.5 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: index * 0.1, type: "spring" }}
+                >
+                  {stat.value}
+                </motion.div>
+                <div className="text-sm text-[#a9a4b8] mt-1">{stat.label}</div>
+              </div>
+              <div 
+                className="h-14 w-14 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                style={{ backgroundColor: `${stat.color}15` }}
+              >
+                <svg className="h-7 w-7" style={{ color: stat.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={stat.icon} />
+                </svg>
+              </div>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-[#14b8a6]/10 flex items-center justify-center">
-              <svg className="h-6 w-6 text-[#14b8a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+            <div className="mt-4 h-1 rounded-full bg-[#2d2640] overflow-hidden">
+              <motion.div 
+                className="h-full rounded-full"
+                style={{ backgroundColor: stat.color }}
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min((stat.value / Math.max(stats.total, 1)) * 100, 100)}%` }}
+                transition={{ delay: 0.5 + index * 0.1, duration: 0.8, ease: "easeOut" }}
+              />
             </div>
-          </div>
-        </div>
-        <div className="bg-gradient-to-br from-[#1a1528] to-[#14101f] rounded-2xl p-5 border border-[#2d2640] hover:border-[#a855f7]/40 transition-colors">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-3xl font-bold text-[#f0eef5]">{stats.contacted}</div>
-              <div className="text-sm text-[#6b6480] mt-1">Contacted</div>
-            </div>
-            <div className="h-12 w-12 rounded-xl bg-[#a855f7]/10 flex items-center justify-center">
-              <svg className="h-6 w-6 text-[#a855f7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div className="bg-gradient-to-br from-[#1a1528] to-[#14101f] rounded-2xl p-5 border border-[#2d2640] hover:border-[#f59e0b]/40 transition-colors">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-3xl font-bold text-[#f0eef5]">{stats.replied}</div>
-              <div className="text-sm text-[#6b6480] mt-1">Replied</div>
-            </div>
-            <div className="h-12 w-12 rounded-xl bg-[#f59e0b]/10 flex items-center justify-center">
-              <svg className="h-6 w-6 text-[#f59e0b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div className="bg-gradient-to-br from-[#1a1528] to-[#14101f] rounded-2xl p-5 border border-[#2d2640] hover:border-[#f43f5e]/40 transition-colors">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-3xl font-bold text-[#f0eef5]">{stats.converted}</div>
-              <div className="text-sm text-[#6b6480] mt-1">Converted</div>
-            </div>
-            <div className="h-12 w-12 rounded-xl bg-[#f43f5e]/10 flex items-center justify-center">
-              <svg className="h-6 w-6 text-[#f43f5e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        ))}
+      </motion.div>
 
       {/* Header with Generate Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h3 className="text-xl font-semibold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Your Leads</h3>
-        <button
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div>
+          <h3 className="text-2xl font-semibold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Lead Gallery</h3>
+          <p className="text-sm text-[#6b6480] mt-1">Discover and manage your photography leads</p>
+        </div>
+        <motion.button
           onClick={generateLeads}
           disabled={generating}
-          className="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-xl disabled:opacity-50 w-full sm:w-auto"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="btn-primary inline-flex items-center justify-center px-8 py-4 rounded-2xl disabled:opacity-50 w-full sm:w-auto shadow-lg shadow-[#14b8a6]/20 hover:shadow-[#14b8a6]/40 transition-shadow"
         >
           {generating ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#0c0a15]/30 border-t-[#0c0a15] mr-2"></div>
-              Finding Leads...
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="rounded-full h-5 w-5 border-2 border-[#0c0a15]/30 border-t-[#0c0a15] mr-3"
+              />
+              Discovering Leads...
             </>
           ) : (
             <>
-              <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              Find New Leads Now
+              Find New Leads
             </>
           )}
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
 
       {/* Search and Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 mb-8">
         <div className="relative flex-1">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6b6480]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#6b6480]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
             type="text"
-            placeholder="Search leads..."
+            placeholder="Search leads by name, address..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-sm text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
+            className="w-full pl-12 pr-4 py-4 glass rounded-2xl text-sm text-[#f0eef5] placeholder-[#6b6480] focus:border-[#14b8a6] focus:ring-2 focus:ring-[#14b8a6]/20 transition-all"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-3 bg-[#14101f] border border-[#2d2640] rounded-xl text-sm text-[#f0eef5] focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]/20"
+          className="px-6 py-4 glass rounded-2xl text-sm text-[#f0eef5] focus:border-[#14b8a6] focus:ring-2 focus:ring-[#14b8a6]/20 cursor-pointer"
         >
           <option value="all">All Status</option>
           <option value="new">New</option>
@@ -338,186 +370,211 @@ export default function LeadsPanel() {
           <option value="converted">Converted</option>
           <option value="rejected">Rejected</option>
         </select>
-      </div>
+      </motion.div>
 
       {/* Message */}
-      {message && (
-        <div className={`mb-6 p-4 rounded-xl flex items-start gap-3 ${
-          message.type === 'success' 
-            ? 'bg-green-900/20 text-green-300 border border-green-700/30' 
-            : 'bg-red-900/20 text-red-300 border border-red-700/30'
-        }`}>
-          {message.type === 'success' ? (
-            <svg className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          ) : (
-            <svg className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          )}
-          <div>
-            <p className="font-medium">{message.type === 'success' ? 'Success!' : 'Error'}</p>
-            <p className="text-sm mt-0.5 opacity-80">{message.text}</p>
-          </div>
-          <button 
-            onClick={() => setMessage(null)}
-            className="ml-auto text-[#6b6480] hover:text-[#f0eef5] transition-colors"
+      <AnimatePresence>
+        {message && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={`mb-8 p-5 rounded-2xl flex items-start gap-4 ${
+              message.type === 'success' 
+                ? 'glass-teal' 
+                : 'bg-red-900/20 text-red-300 border border-red-700/30'
+            }`}
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      )}
+            {message.type === 'success' ? (
+              <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            ) : (
+              <div className="h-10 w-10 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            )}
+            <div className="flex-1">
+              <p className="font-semibold text-[#f0eef5]">{message.type === 'success' ? 'Success!' : 'Error'}</p>
+              <p className="text-sm mt-1 text-[#a9a4b8]">{message.text}</p>
+            </div>
+            <button 
+              onClick={() => setMessage(null)}
+              className="text-[#6b6480] hover:text-[#f0eef5] transition-colors p-1"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Leads Table */}
+      {/* Lead Gallery Cards */}
       {leads.length === 0 ? (
-        <div className="text-center py-16 bg-[#14101f] rounded-2xl border border-[#2d2640]">
-          <svg className="mx-auto h-14 w-14 text-[#3d3650]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <h3 className="mt-4 text-lg font-medium text-[#f0eef5]">No leads yet</h3>
-          <p className="mt-2 text-sm text-[#6b6480]">Click &quot;Find New Leads Now&quot; to get started.</p>
-        </div>
+        <motion.div 
+          variants={itemVariants}
+          className="text-center py-20 glass rounded-3xl"
+        >
+          <div className="h-20 w-20 mx-auto rounded-2xl bg-[#14b8a6]/10 flex items-center justify-center mb-6">
+            <svg className="h-10 w-10 text-[#14b8a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 className="text-2xl font-semibold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>No leads yet</h3>
+          <p className="mt-3 text-[#6b6480] max-w-md mx-auto">Start discovering potential photography clients by clicking the button above.</p>
+        </motion.div>
       ) : filteredAndSortedLeads.length === 0 ? (
-        <div className="text-center py-16 bg-[#14101f] rounded-2xl border border-[#2d2640]">
-          <svg className="mx-auto h-14 w-14 text-[#3d3650]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <h3 className="mt-4 text-lg font-medium text-[#f0eef5]">No matching leads</h3>
-          <p className="mt-2 text-sm text-[#6b6480]">Try adjusting your search or filter.</p>
-        </div>
+        <motion.div 
+          variants={itemVariants}
+          className="text-center py-20 glass rounded-3xl"
+        >
+          <div className="h-20 w-20 mx-auto rounded-2xl bg-[#a855f7]/10 flex items-center justify-center mb-6">
+            <svg className="h-10 w-10 text-[#a855f7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <h3 className="text-2xl font-semibold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>No matching leads</h3>
+          <p className="mt-3 text-[#6b6480]">Try adjusting your search or filter criteria.</p>
+        </motion.div>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-[#2d2640]">
-          <table className="min-w-full divide-y divide-[#2d2640]">
-            <thead className="bg-[#1a1528]">
-              <tr>
-                <th 
-                  onClick={() => handleSort('name')}
-                  className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-[#6b6480] uppercase tracking-wider cursor-pointer hover:text-[#14b8a6] transition-colors"
+        <motion.div 
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {filteredAndSortedLeads.map((lead, index) => (
+            <motion.div
+              key={lead.id}
+              variants={cardVariants}
+              whileHover="hover"
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="glass rounded-2xl p-6 cursor-default group relative overflow-hidden"
+            >
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#14b8a6]/20 blur-3xl rounded-full" />
+                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#a855f7]/20 blur-3xl rounded-full" />
+              </div>
+
+              {/* Status Badge */}
+              <div className="flex items-start justify-between mb-4 relative">
+                <span className={`text-xs font-medium px-3 py-1.5 rounded-full ${getStatusColor(lead.status)}`}>
+                  {lead.status.charAt(0).toUpperCase() + lead.status.slice(1)}
+                </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-2xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                    {lead.score}
+                  </span>
+                  <span className="text-xs text-[#6b6480]">pts</span>
+                </div>
+              </div>
+
+              {/* Lead Name */}
+              <h4 className="text-lg font-semibold text-[#f0eef5] mb-2 group-hover:text-[#14b8a6] transition-colors">
+                {lead.name}
+              </h4>
+
+              {/* Address */}
+              {lead.address && (
+                <p className="text-sm text-[#6b6480] mb-4 line-clamp-2">{lead.address}</p>
+              )}
+
+              {/* Score Bar */}
+              <div className="mb-5">
+                <div className="h-1.5 rounded-full bg-[#2d2640] overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${lead.score}%` }}
+                    transition={{ delay: 0.3 + index * 0.05, duration: 0.6 }}
+                    className="h-full rounded-full bg-gradient-to-r from-[#14b8a6] via-[#a855f7] to-[#f43f5e]"
+                  />
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div className="flex items-center gap-3 mb-5">
+                {lead.website && (
+                  <a
+                    href={lead.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-[#14b8a6] hover:text-[#2dd4bf] transition-colors"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                    Website
+                  </a>
+                )}
+                {lead.phone && (
+                  <a
+                    href={`tel:${lead.phone}`}
+                    className="flex items-center gap-2 text-sm text-[#a855f7] hover:text-[#c084fc] transition-colors"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    Call
+                  </a>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-3 pt-4 border-t border-[#2d2640]">
+                <select
+                  value={lead.status}
+                  onChange={(e) => updateLeadStatus(lead.id, e.target.value as Lead['status'])}
+                  className="flex-1 text-xs font-medium px-3 py-2.5 rounded-xl bg-[#14101f] border border-[#2d2640] text-[#f0eef5] cursor-pointer focus:border-[#14b8a6] transition-colors"
                 >
-                  Name <SortIcon field="name" />
-                </th>
-                <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-[#6b6480] uppercase tracking-wider hidden sm:table-cell">Website</th>
-                <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-[#6b6480] uppercase tracking-wider hidden md:table-cell">Phone</th>
-                <th 
-                  onClick={() => handleSort('score')}
-                  className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-[#6b6480] uppercase tracking-wider cursor-pointer hover:text-[#14b8a6] transition-colors"
-                >
-                  Score <SortIcon field="score" />
-                </th>
-                <th 
-                  onClick={() => handleSort('status')}
-                  className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-[#6b6480] uppercase tracking-wider cursor-pointer hover:text-[#14b8a6] transition-colors"
-                >
-                  Status <SortIcon field="status" />
-                </th>
-                <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-[#6b6480] uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-[#14101f] divide-y divide-[#231d35]">
-              {filteredAndSortedLeads.map((lead) => (
-                <tr key={lead.id} className="hover:bg-[#1a1528] transition-colors">
-                  <td className="px-4 sm:px-6 py-4">
-                    <div className="text-sm font-medium text-[#f0eef5]">{lead.name}</div>
-                    {lead.address && (
-                      <div className="text-xs text-[#6b6480] truncate max-w-[200px] sm:max-w-xs">{lead.address}</div>
-                    )}
-                    {/* Mobile: Show website/phone inline */}
-                    <div className="sm:hidden mt-2 flex flex-wrap gap-2">
-                      {lead.website && (
-                        <a href={lead.website} target="_blank" rel="noopener noreferrer" className="text-xs text-[#14b8a6] hover:underline">
-                          🔗 Website
-                        </a>
-                      )}
-                      {lead.phone && (
-                        <a href={`tel:${lead.phone}`} className="text-xs text-[#a855f7] hover:underline">
-                          📞 Call
-                        </a>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                    {lead.website ? (
-                      <a
-                        href={lead.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-[#14b8a6] hover:text-[#2dd4bf] hover:underline transition-colors"
-                      >
-                        Visit Site
-                      </a>
+                  <option value="new">New</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="replied">Replied</option>
+                  <option value="converted">Converted</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+
+                {lead.status === 'new' && (
+                  <motion.button
+                    onClick={() => sendOutreach(lead.id)}
+                    disabled={sendingOutreach === lead.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="btn-accent px-4 py-2.5 text-xs font-medium rounded-xl disabled:opacity-50 flex items-center gap-2"
+                  >
+                    {sendingOutreach === lead.id ? (
+                      <motion.div 
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full"
+                      />
                     ) : (
-                      <span className="text-sm text-[#3d3650]">—</span>
+                      <>
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Send
+                      </>
                     )}
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap hidden md:table-cell">
-                    {lead.phone ? (
-                      <a href={`tel:${lead.phone}`} className="text-sm text-[#a9a4b8] hover:text-[#a855f7] transition-colors">
-                        {lead.phone}
-                      </a>
-                    ) : (
-                      <span className="text-sm text-[#3d3650]">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-12 sm:w-16 bg-[#2d2640] rounded-full h-2 mr-2">
-                        <div
-                          className="bg-gradient-to-r from-[#14b8a6] via-[#a855f7] to-[#f43f5e] h-2 rounded-full"
-                          style={{ width: `${lead.score}%` }}
-                        />
-                      </div>
-                      <span className="text-xs sm:text-sm text-[#a9a4b8]">{lead.score}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                    <select
-                      value={lead.status}
-                      onChange={(e) => updateLeadStatus(lead.id, e.target.value as Lead['status'])}
-                      className={`text-xs font-medium px-3 py-1.5 rounded-lg cursor-pointer ${getStatusColor(lead.status)}`}
-                    >
-                      <option value="new">New</option>
-                      <option value="contacted">Contacted</option>
-                      <option value="replied">Replied</option>
-                      <option value="converted">Converted</option>
-                      <option value="rejected">Rejected</option>
-                    </select>
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                    {lead.status === 'new' ? (
-                      <button
-                        onClick={() => sendOutreach(lead.id)}
-                        disabled={sendingOutreach === lead.id}
-                        className="btn-accent inline-flex items-center px-3 sm:px-4 py-2 text-xs font-medium rounded-lg disabled:opacity-50"
-                      >
-                        {sendingOutreach === lead.id ? (
-                          <>
-                            <div className="animate-spin rounded-full h-3 w-3 border-2 border-white/30 border-t-white mr-1.5"></div>
-                            <span className="hidden sm:inline">Sending...</span>
-                          </>
-                        ) : (
-                          <>
-                            <svg className="h-3 w-3 sm:mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span className="hidden sm:inline">Send Outreach</span>
-                          </>
-                        )}
-                      </button>
-                    ) : (
-                      <span className="text-xs text-[#6b6480]">
-                        {lead.status === 'contacted' ? '✓ Sent' : '—'}
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </motion.button>
+                )}
+
+                {lead.status === 'contacted' && (
+                  <span className="text-xs text-[#14b8a6] flex items-center gap-1">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Sent
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   )
 }
