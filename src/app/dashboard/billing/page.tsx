@@ -107,8 +107,8 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center pt-20">
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#333] border-t-[#d4af37]"></div>
       </div>
     )
   }
@@ -120,48 +120,48 @@ export default function BillingPage() {
   const isUnlimited = leadsLimit === -1
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-[#0f0f0f] pt-24">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Billing & Subscription</h1>
-          <p className="mt-2 text-gray-600">
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>Billing & Subscription</h1>
+          <p className="mt-3 text-[#a0a0a0]">
             Manage your subscription and view your usage.
           </p>
         </div>
 
         {/* Current Plan Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex items-center justify-between">
+        <div className="card p-8 mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <p className="text-sm text-gray-500">Current Plan</p>
-              <h2 className="text-2xl font-bold text-gray-900">{currentPlanDetails.name}</h2>
+              <p className="text-sm text-[#666]">Current Plan</p>
+              <h2 className="text-2xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>{currentPlanDetails.name}</h2>
               {subscription?.subscription_status && subscription.subscription_status !== 'active' && (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 mt-2">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#d4af37]/20 text-[#d4af37] mt-2">
                   {subscription.subscription_status}
                 </span>
               )}
             </div>
-            <div className="text-right">
-              <p className="text-3xl font-bold text-gray-900">
+            <div className="text-left sm:text-right">
+              <p className="text-4xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                 ${currentPlanDetails.price}
-                <span className="text-base font-normal text-gray-500">/month</span>
+                <span className="text-lg font-normal text-[#666]">/month</span>
               </p>
             </div>
           </div>
 
           {/* Usage */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-sm font-medium text-gray-700">Leads Used This Month</p>
-              <p className="text-sm text-gray-600">
+          <div className="mt-8 pt-8 border-t border-[#333]">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-medium text-[#a0a0a0]">Leads Used This Month</p>
+              <p className="text-sm text-[#f5f5f5]">
                 {leadsUsed} / {isUnlimited ? '∞' : leadsLimit}
               </p>
             </div>
             {!isUnlimited && (
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-[#333] rounded-full h-2">
                 <div 
-                  className="bg-gradient-to-r from-purple-600 to-blue-500 h-2 rounded-full transition-all"
+                  className="bg-gradient-to-r from-[#d4af37] to-[#e5c45e] h-2 rounded-full transition-all"
                   style={{ width: `${Math.min((leadsUsed / leadsLimit) * 100, 100)}%` }}
                 />
               </div>
@@ -173,7 +173,7 @@ export default function BillingPage() {
             <div className="mt-6">
               <button
                 onClick={handleManageSubscription}
-                className="text-purple-600 hover:text-purple-700 text-sm font-medium"
+                className="text-[#d4af37] hover:text-[#e5c45e] text-sm font-medium transition-colors"
               >
                 Manage subscription →
               </button>
@@ -182,7 +182,7 @@ export default function BillingPage() {
         </div>
 
         {/* Plans Grid */}
-        <h3 className="text-xl font-bold text-gray-900 mb-4">
+        <h3 className="text-xl font-bold text-[#f5f5f5] mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
           {currentPlan === 'free' ? 'Upgrade Your Plan' : 'Available Plans'}
         </h3>
         
@@ -194,40 +194,40 @@ export default function BillingPage() {
             return (
               <div
                 key={key}
-                className={`rounded-2xl p-6 ${
+                className={`rounded-2xl p-8 transition-all duration-300 ${
                   isPro
-                    ? 'bg-gradient-to-br from-purple-600 to-blue-500 text-white ring-4 ring-purple-200'
-                    : 'bg-white border border-gray-200'
-                } ${isCurrentPlan ? 'ring-2 ring-green-500' : ''}`}
+                    ? 'bg-gradient-to-b from-[#d4af37]/20 to-[#1a1a1a] border border-[#d4af37]/50 shadow-xl shadow-[#d4af37]/10'
+                    : 'card'
+                } ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}`}
               >
                 {isCurrentPlan && (
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mb-3 ${
-                    isPro ? 'bg-white/20 text-white' : 'bg-green-100 text-green-800'
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium mb-4 ${
+                    isPro ? 'bg-[#d4af37]/20 text-[#d4af37]' : 'bg-green-900/30 text-green-400'
                   }`}>
                     Current Plan
                   </span>
                 )}
                 {isPro && !isCurrentPlan && (
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-400 text-yellow-900 mb-3">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#d4af37] to-[#e5c45e] text-[#0f0f0f] mb-4">
                     POPULAR
                   </span>
                 )}
                 
-                <h4 className={`text-lg font-semibold ${isPro ? 'text-white' : 'text-gray-900'}`}>
+                <h4 className={`text-lg font-semibold ${isPro ? 'text-[#d4af37]' : 'text-[#a0a0a0]'}`}>
                   {plan.name}
                 </h4>
                 
-                <div className="mt-2">
-                  <span className={`text-3xl font-bold ${isPro ? 'text-white' : 'text-gray-900'}`}>
+                <div className="mt-3">
+                  <span className="text-4xl font-bold text-[#f5f5f5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                     ${plan.price}
                   </span>
-                  <span className={isPro ? 'text-purple-100' : 'text-gray-500'}>/month</span>
+                  <span className="text-[#666] ml-1">/month</span>
                 </div>
                 
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-6 space-y-3">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className={`flex items-center text-sm ${isPro ? 'text-white' : 'text-gray-600'}`}>
-                      <svg className={`h-4 w-4 mr-2 ${isPro ? 'text-yellow-400' : 'text-green-500'}`} fill="currentColor" viewBox="0 0 20 20">
+                    <li key={i} className={`flex items-center text-sm ${isPro ? 'text-[#f5f5f5]' : 'text-[#a0a0a0]'}`}>
+                      <svg className="h-5 w-5 mr-3 text-[#d4af37] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       {feature}
@@ -238,16 +238,14 @@ export default function BillingPage() {
                 <button
                   onClick={() => !isCurrentPlan && key !== 'free' && handleUpgrade(key)}
                   disabled={isCurrentPlan || upgrading === key}
-                  className={`mt-6 w-full py-2.5 px-4 rounded-lg font-semibold text-sm transition-all ${
+                  className={`mt-8 w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all ${
                     isCurrentPlan
-                      ? isPro
-                        ? 'bg-white/20 text-white cursor-default'
-                        : 'bg-gray-100 text-gray-400 cursor-default'
+                      ? 'bg-[#252525] text-[#666] cursor-default'
                       : key === 'free'
-                        ? 'bg-gray-100 text-gray-400 cursor-default'
+                        ? 'bg-[#252525] text-[#666] cursor-default'
                         : isPro
-                          ? 'bg-white text-purple-600 hover:bg-gray-100'
-                          : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600'
+                          ? 'btn-gold'
+                          : 'bg-[#252525] text-[#f5f5f5] border border-[#333] hover:border-[#d4af37]/50'
                   } disabled:opacity-50`}
                 >
                   {upgrading === key
