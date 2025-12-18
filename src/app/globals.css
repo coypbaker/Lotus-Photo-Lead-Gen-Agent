@@ -261,3 +261,177 @@ input::placeholder, textarea::placeholder {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+/* ============================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .bg-gradient-animated {
+    animation: none;
+  }
+}
+
+/* Disable heavy animations on mobile for performance */
+@media (max-width: 768px) {
+  .card-hover:hover {
+    transform: none;
+  }
+  
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-accent:hover {
+    transform: none;
+  }
+  
+  /* Reduce blur on mobile for performance */
+  .glass,
+  .glass-dark,
+  .glass-teal,
+  .glass-purple {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* ============================================
+   DARK MODE ENFORCEMENT
+   ============================================ */
+
+/* Force dark mode colors on all elements */
+html {
+  color-scheme: dark;
+}
+
+/* Ensure select dropdowns use dark theme */
+select option {
+  background: #14101f;
+  color: #f0eef5;
+}
+
+/* ============================================
+   EXCLUSIVE PORTAL STYLING
+   ============================================ */
+
+/* Refined typography */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
+}
+
+/* Elegant link underlines */
+a.link-elegant {
+  position: relative;
+  text-decoration: none;
+}
+
+a.link-elegant::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(to right, #14b8a6, #a855f7);
+  transition: width 0.3s ease;
+}
+
+a.link-elegant:hover::after {
+  width: 100%;
+}
+
+/* Refined dividers */
+.divider-elegant {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #2d2640, transparent);
+}
+
+.divider-glow {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #a855f7, transparent);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+/* Subtle hover glow for interactive elements */
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.15);
+}
+
+/* Premium badge styling */
+.badge-premium {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0c0a15;
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+}
+
+/* Exclusive status indicator */
+.status-glow {
+  position: relative;
+}
+
+.status-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.4;
+  z-index: -1;
+}
+
+/* ============================================
+   SPACING UTILITIES
+   ============================================ */
+
+.section-spacing {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Generous content spacing */
+.content-spacing > * + * {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .content-spacing > * + * {
+    margin-top: 2rem;
+  }
+}
