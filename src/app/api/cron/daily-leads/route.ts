@@ -4,17 +4,22 @@ import sgMail from '@sendgrid/mail'
 import { calculateLeadScore } from '@/lib/leadScoring'
 import { generateOutreachEmail, generateDailySummaryEmail } from '@/lib/emailTemplates'
 
-// Use service role for cron jobs to bypass RLS
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// Lazy initialization to avoid build-time errors
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
-const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
+function getGooglePlacesApiKey() {
+  return process.env.GOOGLE_PLACES_API_KEY
+}
 
-// Initialize SendGrid
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+function initSendGrid() {
+  if (process.env.SENDGRID_API_KEY) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  }
 }
 
 // Verify cron secret to prevent unauthorized access
@@ -35,6 +40,10 @@ export async function GET(request: Request) {
   if (!verifyCronSecret(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
+
+  // Initialize services lazily
+  const supabase = getSupabaseClient()
+  initSendGrid()
 
   const results = {
     usersProcessed: 0,
@@ -283,6 +292,7 @@ async function findLeadsForUser(settings: {
   formatted_phone_number?: string
   website?: string
 }>> {
+  const GOOGLE_PLACES_API_KEY = getGooglePlacesApiKey()
   if (!GOOGLE_PLACES_API_KEY || !settings.target_locations) {
     return []
   }
