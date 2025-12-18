@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0c0a15]">
+    <div className="min-h-screen bg-[#0c0a15] dark:bg-[#0c0a15] light-bg-main">
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-32 pb-20">
         {/* Background gradient */}
@@ -17,7 +17,7 @@ export default function Home() {
             <p className="text-[#14b8a6] text-sm font-medium tracking-widest uppercase mb-6">
               AI-Powered Lead Generation
             </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-[#f0eef5] tracking-tight leading-tight" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary tracking-tight leading-tight" style={{ fontFamily: 'var(--font-playfair), serif' }}>
               <span className="block">Find Your Dream Clients</span>
               <span className="block mt-4 text-gradient-multi">
                 On Autopilot
@@ -35,7 +35,7 @@ export default function Home() {
               </Link>
               <Link
                 href="#how-it-works"
-                className="w-full sm:w-auto px-10 py-4 rounded-xl bg-transparent text-[#f0eef5] font-semibold text-lg border border-[#2d2640] hover:border-[#a855f7]/50 hover:text-[#a855f7] transition-all duration-300"
+                className="w-full sm:w-auto px-10 py-4 rounded-xl bg-transparent text-[#f0eef5] dark:text-[#f0eef5] light-text-primary font-semibold text-lg border border-[#2d2640] dark:border-[#2d2640] light-border hover:border-[#a855f7]/50 hover:text-[#a855f7] transition-all duration-300"
               >
                 See How It Works
               </Link>
@@ -55,7 +55,7 @@ export default function Home() {
             <p className="text-[#f43f5e] text-sm font-medium tracking-widest uppercase mb-4">
               The Process
             </p>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary" style={{ fontFamily: 'var(--font-playfair), serif' }}>
               How Lotus Photo Leads Works
             </h2>
             <p className="mt-6 text-lg text-[#a9a4b8] max-w-2xl mx-auto">
@@ -64,37 +64,37 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="card card-hover p-10 group">
-              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center mb-8 shadow-lg shadow-[#14b8a6]/20 group-hover:shadow-[#14b8a6]/40 transition-all">
+            <div className="card card-hover p-10 group feature-card">
+              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center mb-8 shadow-lg shadow-[#14b8a6]/20 group-hover:shadow-[#14b8a6]/40 group-hover:scale-110 transition-all duration-300">
                 <svg className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-[#f0eef5] mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>AI-Powered Discovery</h3>
+              <h3 className="text-xl font-semibold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>AI-Powered Discovery</h3>
               <p className="text-[#a9a4b8] leading-relaxed">
                 Our agents scan venues, planners, and event businesses to find leads actively looking for photographers in your area.
               </p>
             </div>
             
-            <div className="card card-hover p-10 group">
-              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#a855f7] to-[#9333ea] flex items-center justify-center mb-8 shadow-lg shadow-[#a855f7]/20 group-hover:shadow-[#a855f7]/40 transition-all">
+            <div className="card card-hover p-10 group feature-card">
+              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#a855f7] to-[#9333ea] flex items-center justify-center mb-8 shadow-lg shadow-[#a855f7]/20 group-hover:shadow-[#a855f7]/40 group-hover:scale-110 transition-all duration-300">
                 <svg className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-[#f0eef5] mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>Smart Qualification</h3>
+              <h3 className="text-xl font-semibold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>Smart Qualification</h3>
               <p className="text-[#a9a4b8] leading-relaxed">
                 Each lead is scored based on their profile, location, and potential to ensure they match your ideal client profile.
               </p>
             </div>
             
-            <div className="card card-hover p-10 group">
-              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#f43f5e] to-[#e11d48] flex items-center justify-center mb-8 shadow-lg shadow-[#f43f5e]/20 group-hover:shadow-[#f43f5e]/40 transition-all">
+            <div className="card card-hover p-10 group feature-card">
+              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#f43f5e] to-[#e11d48] flex items-center justify-center mb-8 shadow-lg shadow-[#f43f5e]/20 group-hover:shadow-[#f43f5e]/40 group-hover:scale-110 transition-all duration-300">
                 <svg className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-[#f0eef5] mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>Automated Outreach</h3>
+              <h3 className="text-xl font-semibold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>Automated Outreach</h3>
               <p className="text-[#a9a4b8] leading-relaxed">
                 Get qualified leads delivered to your dashboard with personalized outreach emails sent automatically on your behalf.
               </p>
@@ -110,7 +110,7 @@ export default function Home() {
             <p className="text-[#a855f7] text-sm font-medium tracking-widest uppercase mb-4">
               Pricing
             </p>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary" style={{ fontFamily: 'var(--font-playfair), serif' }}>
               Simple, Transparent Pricing
             </h2>
             <p className="mt-6 text-lg text-[#a9a4b8]">
@@ -256,7 +256,7 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#f43f5e]/10 blur-[150px] rounded-full" />
         
         <div className="relative max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
-          <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+          <h2 className="text-3xl sm:text-5xl font-bold text-[#f0eef5] dark:text-[#f0eef5] light-text-primary" style={{ fontFamily: 'var(--font-playfair), serif' }}>
             Ready to Fill Your Calendar?
           </h2>
           <p className="mt-6 text-xl text-[#a9a4b8]">

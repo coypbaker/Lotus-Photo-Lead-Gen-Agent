@@ -523,6 +523,128 @@ html.light .ring-2.ring-\[\#14b8a6\] {
 }
 
 /* ============================================
+   LIGHT MODE - HOME PAGE SPECIFIC FIXES
+   ============================================ */
+
+/* Hero section background gradients */
+html.light .bg-gradient-to-b.from-\[\#1e1830\].via-\[\#14101f\].to-\[\#0c0a15\] {
+  background: linear-gradient(to bottom, #f5f3f8, #faf9fc, #ffffff) !important;
+}
+
+html.light .bg-gradient-to-b.from-\[\#0c0a15\].via-\[\#14101f\].to-\[\#0c0a15\] {
+  background: linear-gradient(to bottom, #faf9fc, #f5f3f8, #faf9fc) !important;
+}
+
+html.light .bg-gradient-to-r.from-\[\#14101f\].via-\[\#1e1830\].to-\[\#14101f\] {
+  background: linear-gradient(to right, #f5f3f8, #faf9fc, #f5f3f8) !important;
+}
+
+/* Glow effects - more subtle in light mode */
+html.light .bg-\[\#a855f7\]\/10.blur-\[150px\],
+html.light [class*="blur-[150px]"],
+html.light [class*="blur-[120px]"],
+html.light [class*="blur-[100px]"],
+html.light [class*="blur-[80px]"] {
+  opacity: 0.4;
+}
+
+/* Card hover effects in light mode */
+html.light .card-hover {
+  transition: all 0.3s ease;
+}
+
+html.light .card-hover:hover {
+  border-color: rgba(20, 184, 166, 0.4);
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Feature card icon glow on hover */
+html.light .group:hover .shadow-\[\#14b8a6\]\/20 {
+  box-shadow: 0 10px 25px rgba(20, 184, 166, 0.25) !important;
+}
+
+html.light .group:hover .shadow-\[\#a855f7\]\/20 {
+  box-shadow: 0 10px 25px rgba(168, 85, 247, 0.25) !important;
+}
+
+html.light .group:hover .shadow-\[\#f43f5e\]\/20 {
+  box-shadow: 0 10px 25px rgba(244, 63, 94, 0.25) !important;
+}
+
+/* Group hover shadow enhancement */
+html.light .group-hover\:shadow-\[\#14b8a6\]\/40 {
+  --tw-shadow-color: rgba(20, 184, 166, 0.3);
+}
+
+html.light .group-hover\:shadow-\[\#a855f7\]\/40 {
+  --tw-shadow-color: rgba(168, 85, 247, 0.3);
+}
+
+html.light .group-hover\:shadow-\[\#f43f5e\]\/40 {
+  --tw-shadow-color: rgba(244, 63, 94, 0.3);
+}
+
+/* Secondary outline button - "See How It Works" */
+html.light .border-\[\#2d2640\].hover\:border-\[\#a855f7\]\/50:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+html.light .hover\:text-\[\#a855f7\]:hover {
+  color: #a855f7;
+}
+
+/* Footer dark background override */
+html.light .bg-\[\#080610\] {
+  background-color: #f5f3f8;
+}
+
+html.light footer.bg-\[\#080610\] {
+  background-color: #f0eef5;
+  border-color: #e5e2eb;
+}
+
+/* Pro plan card - keep dramatic but adjust for light */
+html.light .from-\[\#a855f7\]\/20.via-\[\#1a1528\].to-\[\#14101f\] {
+  background: linear-gradient(to bottom, rgba(168, 85, 247, 0.12), #ffffff, #faf9fc) !important;
+}
+
+/* ============================================
+   LIGHT MODE UTILITY CLASSES
+   ============================================ */
+
+/* Light mode main background */
+html.light .light-bg-main {
+  background: linear-gradient(135deg, #faf9fc 0%, #f5f3f8 50%, #f0eef5 100%) !important;
+}
+
+/* Light mode primary text (for headings) */
+html.light .light-text-primary {
+  color: #1a1528 !important;
+}
+
+/* Light mode border */
+html.light .light-border {
+  border-color: #e5e2eb !important;
+}
+
+/* Feature card hover effects - ensure they work in light mode */
+html.light .feature-card {
+  transition: all 0.3s ease;
+}
+
+html.light .feature-card:hover {
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Ensure icon scale works on hover */
+html.light .group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+}
+
+/* ============================================
    EXCLUSIVE PORTAL STYLING
    ============================================ */
 
