@@ -299,8 +299,41 @@ input::placeholder, textarea::placeholder {
   .glass-dark,
   .glass-teal,
   .glass-purple {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  
+  /* Disable hover effects on mobile (touch) */
+  .hover-glow:hover {
+    box-shadow: none;
+  }
+  
+  /* Simplify shadows on mobile */
+  .shadow-lg,
+  .shadow-xl {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Disable background glow animations */
+  .bg-gradient-animated {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger tap targets */
+  button, 
+  a, 
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Disable all hover transforms */
+  *:hover {
+    transform: none !important;
   }
 }
 
@@ -393,20 +426,76 @@ html.light .btn-outline:hover {
   color: #14b8a6;
 }
 
-/* Light mode text colors */
+/* Light mode text colors - comprehensive overrides */
 html.light .text-\[\#f0eef5\] { color: #1a1528; }
 html.light .text-\[\#a9a4b8\] { color: #6b6480; }
-html.light .text-\[\#6b6480\] { color: #a9a4b8; }
+html.light .text-\[\#6b6480\] { color: #8b8599; }
+html.light .text-\[\#4d4660\] { color: #a9a4b8; }
+html.light .text-white { color: #1a1528; }
 
-/* Light mode backgrounds */
+/* Light mode backgrounds - comprehensive overrides */
 html.light .bg-\[\#0c0a15\] { background-color: #faf9fc; }
 html.light .bg-\[\#14101f\] { background-color: #f5f3f8; }
 html.light .bg-\[\#1e1830\] { background-color: #f0eef5; }
 html.light .bg-\[\#1a1528\] { background-color: #ffffff; }
+html.light .bg-\[\#0c0a15\]\/50 { background-color: rgba(250, 249, 252, 0.5); }
+html.light .bg-\[\#1e1830\]\/50 { background-color: rgba(240, 238, 245, 0.5); }
+
+/* Light mode stat cards and inner containers */
+html.light .rounded-2xl.bg-\[\#0c0a15\]\/50,
+html.light [class*="bg-[#0c0a15]/50"] {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid #e5e2eb;
+}
 
 /* Light mode borders */
 html.light .border-\[\#2d2640\] { border-color: #e5e2eb; }
 html.light .border-\[\#1e1830\] { border-color: #f0eef5; }
+html.light .border-\[\#a855f7\]\/50 { border-color: rgba(168, 85, 247, 0.3); }
+html.light .border-\[\#14b8a6\]\/50 { border-color: rgba(20, 184, 166, 0.3); }
+
+/* Light mode hover states */
+html.light .hover\:bg-\[\#1e1830\]:hover { background-color: #f0eef5; }
+html.light .hover\:bg-\[\#1e1830\]\/50:hover { background-color: rgba(240, 238, 245, 0.5); }
+
+/* Light mode glass variants */
+html.light .glass-teal {
+  background: rgba(20, 184, 166, 0.08);
+  border-color: rgba(20, 184, 166, 0.25);
+}
+
+html.light .glass-purple {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.25);
+}
+
+/* Light mode gradient backgrounds - fix dark gradients */
+html.light .bg-gradient-to-b.from-\[\#a855f7\]\/20 {
+  background: linear-gradient(to bottom, rgba(168, 85, 247, 0.1), #ffffff) !important;
+}
+
+html.light .bg-gradient-to-r.from-\[\#f43f5e\]\/10 {
+  background: linear-gradient(to right, rgba(244, 63, 94, 0.08), transparent) !important;
+}
+
+/* Light mode accent backgrounds */
+html.light .bg-\[\#a855f7\]\/10 { background-color: rgba(168, 85, 247, 0.08); }
+html.light .bg-\[\#a855f7\]\/15 { background-color: rgba(168, 85, 247, 0.1); }
+html.light .bg-\[\#a855f7\]\/20 { background-color: rgba(168, 85, 247, 0.12); }
+html.light .bg-\[\#14b8a6\]\/10 { background-color: rgba(20, 184, 166, 0.08); }
+html.light .bg-\[\#14b8a6\]\/15 { background-color: rgba(20, 184, 166, 0.1); }
+html.light .bg-\[\#14b8a6\]\/20 { background-color: rgba(20, 184, 166, 0.12); }
+html.light .bg-\[\#f59e0b\]\/10 { background-color: rgba(245, 158, 11, 0.08); }
+html.light .bg-\[\#f59e0b\]\/15 { background-color: rgba(245, 158, 11, 0.1); }
+html.light .bg-\[\#f59e0b\]\/20 { background-color: rgba(245, 158, 11, 0.12); }
+html.light .bg-\[\#f43f5e\]\/10 { background-color: rgba(244, 63, 94, 0.08); }
+html.light .bg-\[\#f43f5e\]\/20 { background-color: rgba(244, 63, 94, 0.12); }
+
+/* Light mode shadows - softer */
+html.light .shadow-\[\#a855f7\]\/20 { --tw-shadow-color: rgba(168, 85, 247, 0.1); }
+html.light .shadow-\[\#a855f7\]\/25 { --tw-shadow-color: rgba(168, 85, 247, 0.12); }
+html.light .shadow-\[\#14b8a6\]\/25 { --tw-shadow-color: rgba(20, 184, 166, 0.12); }
+html.light .shadow-\[\#f59e0b\]\/25 { --tw-shadow-color: rgba(245, 158, 11, 0.12); }
 
 /* Light mode dividers */
 html.light .divider-elegant {
@@ -416,6 +505,21 @@ html.light .divider-elegant {
 html.light .divider-glow {
   background: linear-gradient(to right, transparent, #a855f7, transparent);
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.15);
+}
+
+/* Light mode - fix plan cards */
+html.light .via-\[\#1a1528\] { --tw-gradient-via: #faf9fc; }
+html.light .to-\[\#14101f\] { --tw-gradient-to: #f5f3f8; }
+
+/* Light mode loading spinner */
+html.light .border-\[\#2d2640\] { border-color: #e5e2eb; }
+html.light .border-t-\[\#14b8a6\] { border-top-color: #14b8a6; }
+
+/* Light mode ring states */
+html.light .ring-\[\#14b8a6\] { --tw-ring-color: rgba(20, 184, 166, 0.3); }
+html.light .ring-2.ring-\[\#14b8a6\] { 
+  --tw-ring-color: rgba(20, 184, 166, 0.3);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
 }
 
 /* ============================================
