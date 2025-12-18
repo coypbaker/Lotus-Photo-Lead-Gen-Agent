@@ -2,9 +2,21 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CreditCard, Zap, Crown, Sparkles, Check, ArrowRight, TrendingUp, Users, Mail } from 'lucide-react'
+import { CreditCard, Zap, Crown, Sparkles, Check, ArrowRight, TrendingUp, Users, Mail, Plus, Package } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { PLANS, PlanKey } from '@/lib/plans'
+
+// Lead pack definitions
+const LEAD_PACKS = {
+  free: [
+    { id: 'free-50', leads: 50, price: 10, popular: true },
+  ],
+  pro: [
+    { id: 'pro-100', leads: 100, price: 10, popular: false },
+    { id: 'pro-250', leads: 250, price: 20, popular: true },
+  ],
+  premium: [] as { id: string; leads: number; price: number; popular: boolean }[],
+}
 
 interface Subscription {
   plan: PlanKey
@@ -17,6 +29,7 @@ export default function BillingPage() {
   const [loading, setLoading] = useState(true)
   const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [upgrading, setUpgrading] = useState<string | null>(null)
+  const [purchasingPack, setPurchasingPack] = useState<string | null>(null)
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null)
   const supabase = createClient()
 
@@ -105,6 +118,34 @@ export default function BillingPage() {
       }
     } catch (error) {
       console.error('Error:', error)
+    }
+  }
+
+  const handlePurchaseLeadPack = async (packId: string) => {
+    setPurchasingPack(packId)
+    try {
+      const response = await fetch('/api/stripe/create-lead-pack-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ packId }),
+      })
+
+      const { url, error } = await response.json()
+      
+      if (error) {
+        console.error('Lead pack checkout error:', error)
+        alert('Failed to start checkout. Please try again.')
+        return
+      }
+
+      if (url) {
+        window.location.href = url
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Failed to start checkout. Please try again.')
+    } finally {
+      setPurchasingPack(null)
     }
   }
 
@@ -417,6 +458,134 @@ export default function BillingPage() {
             )
           })}
         </div>
+
+        {/* Lead Packs Section - Only show for free and pro plans */}
+        {currentPlan !== 'premium' && LEAD_PACKS[currentPlan].length > 0 && (
+          <>
+            {/* Section Title */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="mt-16 mb-8"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <Package className="h-6 w-6 text-[#f59e0b]" />
+                <h3 className="text-2xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                  Need More Leads?
+                </h3>
+              </div>
+              <p className="text-[#6b6480]">
+                Purchase additional lead packs to boost your outreach this month
+              </p>
+            </motion.div>
+
+            {/* Lead Packs Grid */}
+            <div className={`grid gap-6 ${LEAD_PACKS[currentPlan].length === 1 ? 'max-w-md' : 'md:grid-cols-2 max-w-2xl'}`}>
+              {LEAD_PACKS[currentPlan].map((pack, index) => (
+                <motion.div
+                  key={pack.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  className={`relative glass rounded-2xl p-6 transition-all duration-300 hover:border-[#f59e0b]/50 ${
+                    pack.popular ? 'border-[#f59e0b]/30' : ''
+                  }`}
+                >
+                  {pack.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#f59e0b] to-[#f59e0b]/80 text-[#0c0a15]">
+                      <Sparkles className="h-3 w-3" />
+                      BEST VALUE
+                    </span>
+                  )}
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-12 rounded-xl bg-[#f59e0b]/15 flex items-center justify-center">
+                        <Plus className="h-6 w-6 text-[#f59e0b]" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-[#f0eef5]">
+                          {pack.leads} Extra Leads
+                        </h4>
+                        <p className="text-sm text-[#6b6480]">One-time purchase</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-3xl font-bold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                        ${pack.price}
+                      </span>
+                      <p className="text-xs text-[#6b6480]">
+                        ${(pack.price / pack.leads * 10).toFixed(2)}/10 leads
+                      </p>
+                    </div>
+                  </div>
+
+                  <motion.button
+                    onClick={() => handlePurchaseLeadPack(pack.id)}
+                    disabled={purchasingPack === pack.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="relative overflow-hidden w-full py-3 px-6 rounded-xl font-semibold text-sm text-[#0c0a15] bg-gradient-to-r from-[#f59e0b] to-[#f59e0b]/90 shadow-lg shadow-[#f59e0b]/25 hover:shadow-[#f59e0b]/40 transition-all duration-300 disabled:opacity-50"
+                  >
+                    {/* Shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700" />
+                    <span className="relative flex items-center justify-center gap-2">
+                      {purchasingPack === pack.id ? (
+                        <>
+                          <motion.div 
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            className="h-4 w-4 border-2 border-[#0c0a15]/30 border-t-[#0c0a15] rounded-full"
+                          />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="h-4 w-4" />
+                          Purchase Pack
+                        </>
+                      )}
+                    </span>
+                  </motion.button>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Note for unlimited leads */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="mt-6 text-sm text-[#6b6480] flex items-center gap-2"
+            >
+              <Crown className="h-4 w-4 text-[#f59e0b]" />
+              <span>
+                Upgrade to <span className="text-[#f59e0b] font-medium">Premium</span> for unlimited leads every month
+              </span>
+            </motion.p>
+          </>
+        )}
+
+        {/* Premium unlimited message */}
+        {currentPlan === 'premium' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-16 glass rounded-2xl p-8 text-center"
+          >
+            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#f59e0b] to-[#f59e0b]/70 flex items-center justify-center mx-auto mb-4">
+              <Crown className="h-8 w-8 text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-[#f0eef5] mb-2" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+              Unlimited Leads Included
+            </h3>
+            <p className="text-[#6b6480]">
+              As a Premium member, you have unlimited access to leads every month. No need to purchase extra packs!
+            </p>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   )

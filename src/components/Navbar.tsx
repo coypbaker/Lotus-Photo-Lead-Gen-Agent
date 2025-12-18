@@ -1,12 +1,12 @@
 'use client'
 
-import { Fragment } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, LayoutDashboard, Settings, CreditCard, LogOut } from 'lucide-react'
+import { Menu, X, LayoutDashboard, Settings, CreditCard, LogOut, Sun, Moon } from 'lucide-react'
+import { useTheme } from '@/context/ThemeContext'
 import type { User } from '@supabase/supabase-js'
 
 export default function Navbar() {
@@ -15,6 +15,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const router = useRouter()
   const supabase = createClient()
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const getUser = async () => {
@@ -68,7 +69,40 @@ export default function Navbar() {
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-4">
+              {/* Theme Toggle */}
+              <motion.button
+                onClick={toggleTheme}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2.5 rounded-xl bg-[#1a1528] border border-[#2d2640] hover:border-[#a855f7]/50 transition-all"
+                aria-label="Toggle theme"
+              >
+                <AnimatePresence mode="wait">
+                  {theme === 'dark' ? (
+                    <motion.div
+                      key="sun"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <Sun className="h-4 w-4 text-[#f59e0b]" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="moon"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <Moon className="h-4 w-4 text-[#a855f7]" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+
               {loading ? (
                 <div className="h-8 w-24 bg-[#2d2640] animate-pulse rounded-lg"></div>
               ) : user ? (
@@ -155,13 +189,28 @@ export default function Navbar() {
                   <span className="text-lg font-semibold text-[#f0eef5]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                     Menu
                   </span>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={closeMobileMenu}
-                    className="p-2 rounded-xl text-[#6b6480] hover:text-[#f0eef5] hover:bg-[#1e1830] transition-all"
-                  >
-                    <X className="h-5 w-5" />
-                  </motion.button>
+                  <div className="flex items-center gap-2">
+                    {/* Mobile Theme Toggle */}
+                    <motion.button
+                      onClick={toggleTheme}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2 rounded-xl bg-[#1a1528] border border-[#2d2640] transition-all"
+                      aria-label="Toggle theme"
+                    >
+                      {theme === 'dark' ? (
+                        <Sun className="h-4 w-4 text-[#f59e0b]" />
+                      ) : (
+                        <Moon className="h-4 w-4 text-[#a855f7]" />
+                      )}
+                    </motion.button>
+                    <motion.button
+                      whileTap={{ scale: 0.9 }}
+                      onClick={closeMobileMenu}
+                      className="p-2 rounded-xl text-[#6b6480] hover:text-[#f0eef5] hover:bg-[#1e1830] transition-all"
+                    >
+                      <X className="h-5 w-5" />
+                    </motion.button>
+                  </div>
                 </div>
 
                 {/* Mobile Menu Content */}

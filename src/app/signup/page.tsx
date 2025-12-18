@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Lock, ShieldCheck, ArrowRight, AlertCircle, Sparkles } from 'lucide-react'
+import { Mail, Lock, ShieldCheck, ArrowRight, AlertCircle, Sparkles, Sun, Moon } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useTheme } from '@/context/ThemeContext'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -15,6 +16,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const supabase = createClient()
+  const { theme, toggleTheme } = useTheme()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -52,7 +54,41 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0c0a15] py-12 px-4 sm:px-6 lg:px-8 pt-28 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 pt-28 relative overflow-hidden">
+      {/* Theme Toggle */}
+      <motion.button
+        onClick={toggleTheme}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5 }}
+        className="absolute top-24 right-6 p-3 rounded-xl glass hover:scale-105 transition-transform z-20"
+        aria-label="Toggle theme"
+      >
+        <AnimatePresence mode="wait">
+          {theme === 'dark' ? (
+            <motion.div
+              key="sun"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Sun className="h-5 w-5 text-[#f59e0b]" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="moon"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Moon className="h-5 w-5 text-[#a855f7]" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.button>
+
       {/* Background glows */}
       <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-[#14b8a6]/10 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/3 left-1/4 w-[300px] h-[300px] bg-[#a855f7]/10 blur-[120px] rounded-full pointer-events-none" />

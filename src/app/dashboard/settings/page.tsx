@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Camera, MapPin, Users, Target, Mail, Signature, Bot, ChevronDown, Sparkles, Check, AlertCircle } from 'lucide-react'
+import { Camera, MapPin, Users, Target, Mail, Signature, Bot, ChevronDown, Sparkles, Check, AlertCircle, Sun, Moon, Palette } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useTheme } from '@/context/ThemeContext'
 import type { UserSettings } from '@/types/database'
 
 export default function SettingsPage() {
@@ -11,6 +12,7 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const [activeSection, setActiveSection] = useState<string | null>('profile')
+  const { theme, setTheme } = useTheme()
   
   const [settings, setSettings] = useState({
     photographer_niche: '',
@@ -135,6 +137,13 @@ export default function SettingsPage() {
 
   const sections = [
     {
+      id: 'appearance',
+      title: 'Appearance',
+      icon: Palette,
+      color: '#a855f7',
+      description: 'Customize your portal experience',
+    },
+    {
       id: 'profile',
       title: 'Photography Profile',
       icon: Camera,
@@ -145,7 +154,7 @@ export default function SettingsPage() {
       id: 'location',
       title: 'Target Markets',
       icon: MapPin,
-      color: '#a855f7',
+      color: '#c084fc',
       description: 'Set your geographic focus areas',
     },
     {
@@ -281,6 +290,89 @@ export default function SettingsPage() {
                         {/* Elegant Divider */}
                         <div className="h-px w-full mb-6" style={{ background: `linear-gradient(to right, transparent, ${section.color}40, transparent)` }} />
                         
+                        {section.id === 'appearance' && (
+                          <div className="space-y-6">
+                            <div>
+                              <label className="block text-sm font-medium text-[#a9a4b8] mb-4 flex items-center gap-2">
+                                <Palette className="h-4 w-4" style={{ color: section.color }} />
+                                Theme
+                              </label>
+                              <div className="grid grid-cols-2 gap-4">
+                                {/* Dark Mode Option */}
+                                <motion.button
+                                  type="button"
+                                  onClick={() => setTheme('dark')}
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                  className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
+                                    theme === 'dark'
+                                      ? 'border-[#a855f7] bg-[#a855f7]/10 shadow-lg shadow-[#a855f7]/20'
+                                      : 'border-[#2d2640] bg-[#0c0a15] hover:border-[#a855f7]/50'
+                                  }`}
+                                >
+                                  <div className="flex flex-col items-center gap-3">
+                                    <div className={`h-14 w-14 rounded-xl flex items-center justify-center ${
+                                      theme === 'dark' ? 'bg-[#a855f7]/20' : 'bg-[#1e1830]'
+                                    }`}>
+                                      <Moon className={`h-7 w-7 ${theme === 'dark' ? 'text-[#a855f7]' : 'text-[#6b6480]'}`} />
+                                    </div>
+                                    <span className={`font-medium ${theme === 'dark' ? 'text-[#f0eef5]' : 'text-[#a9a4b8]'}`}>
+                                      Dark Mode
+                                    </span>
+                                    <span className="text-xs text-[#6b6480]">Elegant & mysterious</span>
+                                  </div>
+                                  {theme === 'dark' && (
+                                    <motion.div
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      className="absolute top-3 right-3 h-6 w-6 rounded-full bg-[#a855f7] flex items-center justify-center"
+                                    >
+                                      <Check className="h-4 w-4 text-white" />
+                                    </motion.div>
+                                  )}
+                                </motion.button>
+
+                                {/* Light Mode Option */}
+                                <motion.button
+                                  type="button"
+                                  onClick={() => setTheme('light')}
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                  className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
+                                    theme === 'light'
+                                      ? 'border-[#f59e0b] bg-[#f59e0b]/10 shadow-lg shadow-[#f59e0b]/20'
+                                      : 'border-[#2d2640] bg-[#0c0a15] hover:border-[#f59e0b]/50'
+                                  }`}
+                                >
+                                  <div className="flex flex-col items-center gap-3">
+                                    <div className={`h-14 w-14 rounded-xl flex items-center justify-center ${
+                                      theme === 'light' ? 'bg-[#f59e0b]/20' : 'bg-[#1e1830]'
+                                    }`}>
+                                      <Sun className={`h-7 w-7 ${theme === 'light' ? 'text-[#f59e0b]' : 'text-[#6b6480]'}`} />
+                                    </div>
+                                    <span className={`font-medium ${theme === 'light' ? 'text-[#f0eef5]' : 'text-[#a9a4b8]'}`}>
+                                      Light Mode
+                                    </span>
+                                    <span className="text-xs text-[#6b6480]">Clean & bright</span>
+                                  </div>
+                                  {theme === 'light' && (
+                                    <motion.div
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      className="absolute top-3 right-3 h-6 w-6 rounded-full bg-[#f59e0b] flex items-center justify-center"
+                                    >
+                                      <Check className="h-4 w-4 text-white" />
+                                    </motion.div>
+                                  )}
+                                </motion.button>
+                              </div>
+                              <p className="mt-4 text-xs text-[#6b6480] text-center">
+                                Your preference is saved automatically
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
                         {section.id === 'profile' && (
                           <div className="space-y-6">
                             <div className="group">
